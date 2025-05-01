@@ -1,0 +1,30 @@
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+public class SimpleJavaKeylogger 
+{
+    private static final String LOG_FILE = "java_key_log.txt";
+    public static void main(String[] args) 
+    {
+        System.out.println("Simple Java Keylogger started. Type in this console window.");
+        System.out.println("Press Ctrl+C to stop.");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+             FileWriter writer = new FileWriter(LOG_FILE, true)) 
+             {
+            int c;
+            while ((c = reader.read()) != -1) 
+            {
+                char key = (char) c;
+                writer.write(String.valueOf(key));
+                System.out.print("*"); // Optional: Indicate a key was pressed
+            }
+        } catch (IOException e) 
+        {
+            System.err.println("Error during logging: " + e.getMessage());
+        } finally 
+        {
+            System.out.println("\nKeylogging stopped. Check " + LOG_FILE);
+        }
+    }
+}
